@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { React, useState, useEffect } from 'react';
+import { Block } from './Block';
+import './index.scss';
 
 function App() {
+    //const [from ]
+    const [rates, setRates] = useState({});
+
+    useEffect(() => {
+        fetch('https://cdn.cur.su/api/latest.json')
+            .then((res) => res.json())
+            .then((json) => {
+                setRates(json.rates);
+                console.log(json.rates);
+            })
+            .catch((err) => {
+                console.warn(err);
+                alert('Ну удалось получить информацию')
+            }, [])
+
+    })
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Block value={0} currency="RUB" onChangeCurrency={(cur) => console.log(cur)} />
+      <Block value={0} currency="USD" />
     </div>
   );
 }
