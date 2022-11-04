@@ -1,9 +1,16 @@
-import { React, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { Route } from 'react-router-dom';
 import { Block } from './Block';
+import { Main } from './Main';
+import { CurrencyRates } from './CurrencyRates';
 import './index.scss';
 
 function App() {
-    //const [from ]
+    const [fromCurrency, setFromCurrency] = useState("RUB");
+    const [convertedCurrency, setConvertedCurrency] = useState("USD");
+    const [toPrice, setToPrice] = useState(0);
+    const [fromPrice, setFromPrice] = useState(0);
+
     const [rates, setRates] = useState({});
 
     useEffect(() => {
@@ -16,14 +23,39 @@ function App() {
             .catch((err) => {
                 console.warn(err);
                 alert('Ну удалось получить информацию')
-            }, [])
+            });
+    }, [])
 
-    })
+    const onChangeFromPrice = (value) => {
+        setFromPrice(value)
+    }
+
+    const onChangeToPrice = (value) => {
+        setToPrice(value)
+    }
 
   return (
     <div className="App">
-      <Block value={0} currency="RUB" onChangeCurrency={(cur) => console.log(cur)} />
-      <Block value={0} currency="USD" />
+      <Block
+          value={fromPrice}
+          currency={fromCurrency}
+          onChangeCurrency={setFromCurrency}
+          onChangeValue={onChangeFromPrice}
+      />
+      <Block
+          value={toPrice}
+          currency={convertedCurrency}
+          onChangeCurrency={setConvertedCurrency}
+          onChangeValue={onChangeToPrice}
+      />
+
+        <Route exact path="/">
+            <Main />
+        </Route>
+        <Route>
+            <CurrencyRates />
+        </Route>
+
     </div>
   );
 }
