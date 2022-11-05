@@ -1,4 +1,16 @@
-.input__container {
+.form {
+    max-width: 100%;
+    font-family: 'Inter', Arial, sans-serif;
+    align-items: center;
+    margin: 70px 0;
+    color: rgba(66, 66, 66, 1);
+    display: flex;
+    padding: 0 0 13px 0;
+    border-bottom: 1px solid rgba(66, 66, 66, 1);
+    justify-content: space-between;
+}
+
+.form__container {
     padding: 0 0 13px 0;
     border-bottom: 1px solid rgba(66, 66, 66, 1);
     display: flex;
@@ -12,9 +24,14 @@
     line-height: 34px;
     background-color: transparent;
     color: rgba(139, 139, 139, 1);
-    border: 0;
+    border: 1px solid rgba(139, 139, 139, 1);
+    border-radius: 5px;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     flex-basis: 70%;
+}
+
+.form__span {
+    display: block;
 }

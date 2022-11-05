@@ -4,9 +4,10 @@ import "./Main.css";
 export const Main = ({ onConvert, onChangeValue, value, result }) => {
     return(
 
-        <div className="input__container">
-            <h2>Конвертер из одной валюты в другую</h2>
-            <form onSubmit={onConvert}>
+        <div className="content">
+            <h2 className="content__heading">Конвертер из одной валюты в другую</h2>
+            <form className="form" onSubmit={onConvert}>
+
                 <input
                     className="input__text"
                     onChange={(e) => onChangeValue(e.target.value)}
@@ -14,8 +15,8 @@ export const Main = ({ onConvert, onChangeValue, value, result }) => {
                     type="text"
                     placeholder="15 usd in rub"
                 />
+                <p className="form__span">Результат конвертации: {result}</p>
             </form>
-            <p>Результат конвертации: {result}</p>
         </div>
     )
 }

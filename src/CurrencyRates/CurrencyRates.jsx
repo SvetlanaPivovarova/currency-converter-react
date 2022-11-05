@@ -40,8 +40,8 @@ export const CurrencyRates = ({ ratesRef }) => {
     }
 
     return(
-        <div>
-            <h2>Курсы валют</h2>
+        <div className="content">
+            <h2 className="content__heading">Курсы валют</h2>
             <span>Базовая валюта {baseCurrency}</span>
             <ul>
                 {currencyArray.map((cur) => (
