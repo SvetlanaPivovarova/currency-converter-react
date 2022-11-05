@@ -9,3 +9,27 @@
     font-weight: 400;
     text-align: center;
 }
+
+.menu__nav-item {
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 500;
+    color: rgba(66, 133, 244, 1);
+    text-decoration: none;
+    padding: 0;
+    margin: 0 0 28px;
+    cursor: pointer;
+    transition: opacity .3s ease;
+}
+
+.menu__nav-item:hover {
+    opacity: .8;
+}
+
+.menu__nav-item_type_last {
+    margin-bottom: 50vh;
+}
+
+.menu__nav_active {
+    text-decoration: underline;
+}

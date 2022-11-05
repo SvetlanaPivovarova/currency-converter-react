@@ -53,12 +53,12 @@ function App() {
         const price = value / ratesRef.current[fromCurrency];
         const result = price * ratesRef.current[convertedCurrency]
         setFromPrice(value);
-        setToPrice(result.toFixed(3));
+        setToPrice(result.toFixed(2));
     }
 
     const onChangeToPrice = (value) => {
         const result = (ratesRef.current[fromCurrency] / ratesRef.current[convertedCurrency]) * value;
-        setFromPrice(result.toFixed(3));
+        setFromPrice(result.toFixed(2));
         setToPrice(value)
     }
 
@@ -74,7 +74,7 @@ function App() {
 
     <div className="page content">
         <Header />
-        <Route path="/">
+        <Route exact path="/">
             <Main
                 onConvert={onConvert}
                 value={currencyValue}
@@ -97,7 +97,9 @@ function App() {
             />
         </Route>
         <Route path="/rates">
-            <CurrencyRates />
+            <CurrencyRates
+                ratesRef={ratesRef}
+            />
         </Route>
 
     </div>

@@ -3,7 +3,9 @@ import "./Main.css";
 
 export const Main = ({ onConvert, onChangeValue, value, result }) => {
     return(
+
         <div className="input__container">
+            <h2>Конвертер из одной валюты в другую</h2>
             <form onSubmit={onConvert}>
                 <input
                     className="input__text"
