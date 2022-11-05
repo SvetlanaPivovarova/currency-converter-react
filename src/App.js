@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Route } from 'react-router-dom';
 import { Block } from './Block';
 import { Main } from './Main';
@@ -8,17 +8,18 @@ import './index.scss';
 function App() {
     const [fromCurrency, setFromCurrency] = useState("RUB");
     const [convertedCurrency, setConvertedCurrency] = useState("USD");
-    const [toPrice, setToPrice] = useState(0);
+    const [toPrice, setToPrice] = useState(1);
     const [fromPrice, setFromPrice] = useState(0);
 
-    const [rates, setRates] = useState({});
+    // const [rates, setRates] = useState({});
+    const ratesRef = useRef({});
 
     useEffect(() => {
         fetch('https://cdn.cur.su/api/latest.json')
             .then((res) => res.json())
             .then((json) => {
-                setRates(json.rates);
-                console.log(json.rates);
+                ratesRef.current = json.rates;
+                onChangeToPrice(1);
             })
             .catch((err) => {
                 console.warn(err);
@@ -27,33 +28,45 @@ function App() {
     }, [])
 
     const onChangeFromPrice = (value) => {
-        setFromPrice(value)
+        const price = value / ratesRef.current[fromCurrency];
+        const result = price * ratesRef.current[convertedCurrency]
+        setFromPrice(value);
+        setToPrice(result.toFixed(3));
     }
 
     const onChangeToPrice = (value) => {
+        const result = (ratesRef.current[fromCurrency] / ratesRef.current[convertedCurrency]) * value;
+        setFromPrice(result.toFixed(3));
         setToPrice(value)
     }
 
-  return (
-    <div className="App">
-      <Block
-          value={fromPrice}
-          currency={fromCurrency}
-          onChangeCurrency={setFromCurrency}
-          onChangeValue={onChangeFromPrice}
-      />
-      <Block
-          value={toPrice}
-          currency={convertedCurrency}
-          onChangeCurrency={setConvertedCurrency}
-          onChangeValue={onChangeToPrice}
-      />
+    useEffect(() => {
+        onChangeFromPrice(fromPrice);
+    }, [fromCurrency]);
 
-        <Route exact path="/">
+    useEffect(() => {
+        onChangeToPrice(toPrice);
+    }, [convertedCurrency]);
+
+  return (
+
+    <div className="App">
+        <Route path="/">
             <Main />
         </Route>
-        <Route>
-            <CurrencyRates />
+        <Route path="/convert">
+            <Block
+                value={fromPrice}
+                currency={fromCurrency}
+                onChangeCurrency={setFromCurrency}
+                onChangeValue={onChangeFromPrice}
+            />
+            <Block
+                value={toPrice}
+                currency={convertedCurrency}
+                onChangeCurrency={setConvertedCurrency}
+                onChangeValue={onChangeToPrice}
+            />
         </Route>
 
     </div>
