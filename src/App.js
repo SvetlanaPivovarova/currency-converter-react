@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import { Header } from './Header/Header';
 import { Block } from './Block';
 import { Main } from './Main/Main';
-import { CurrencyRates } from './CurrencyRates';
+import { CurrencyRates } from './CurrencyRates/CurrencyRates';
 import './index.scss';
 
 function App() {
@@ -95,6 +95,9 @@ function App() {
                 onChangeCurrency={setConvertedCurrency}
                 onChangeValue={onChangeToPrice}
             />
+        </Route>
+        <Route path="/rates">
+            <CurrencyRates />
         </Route>
 
     </div>
