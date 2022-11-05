@@ -1,0 +1,20 @@
+.input__container {
+    padding: 0 0 13px 0;
+    border-bottom: 1px solid rgba(66, 66, 66, 1);
+    display: flex;
+    justify-content: space-between;
+}
+
+.input__text {
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 34px;
+    background-color: transparent;
+    color: rgba(139, 139, 139, 1);
+    border: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    flex-basis: 70%;
+}

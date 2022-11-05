@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { Route } from 'react-router-dom';
+import { Header } from './Header/Header';
 import { Block } from './Block';
-import { Main } from './Main';
+import { Main } from './Main/Main';
 import { CurrencyRates } from './CurrencyRates';
 import './index.scss';
 
@@ -10,6 +11,9 @@ function App() {
     const [convertedCurrency, setConvertedCurrency] = useState("USD");
     const [toPrice, setToPrice] = useState(1);
     const [fromPrice, setFromPrice] = useState(0);
+
+    const [currencyValue, setCurrencyValue] = useState("");
+    const [convertingResult, setConvertingResult] = useState(0);
 
     // const [rates, setRates] = useState({});
     const ratesRef = useRef({});
@@ -20,12 +24,30 @@ function App() {
             .then((json) => {
                 ratesRef.current = json.rates;
                 onChangeToPrice(1);
+                console.log(json.rates);
             })
             .catch((err) => {
                 console.warn(err);
                 alert('Ну удалось получить информацию')
             });
     }, [])
+
+    const onCalculateValue = (value) => {
+        //const arr = value.split(' ');
+        setCurrencyValue(value);
+        console.log(currencyValue);
+    }
+
+    const onConvert = (e) => {
+        e.preventDefault();
+        const arr = currencyValue.toUpperCase().split(' ');
+        const price = arr[0];
+        const currencyFrom = arr[1];
+        const currencyTo = arr[3];
+        const result = (price * ratesRef.current[currencyTo]) / ratesRef.current[currencyFrom]
+        setConvertingResult(result.toFixed(3));
+        console.log("calculate", result);
+    }
 
     const onChangeFromPrice = (value) => {
         const price = value / ratesRef.current[fromCurrency];
@@ -50,9 +72,15 @@ function App() {
 
   return (
 
-    <div className="App">
+    <div className="page content">
+        <Header />
         <Route path="/">
-            <Main />
+            <Main
+                onConvert={onConvert}
+                value={currencyValue}
+                onChangeValue={onCalculateValue}
+                result={convertingResult}
+            />
         </Route>
         <Route path="/convert">
             <Block
